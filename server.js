@@ -7,3 +7,4 @@ app.listen(8080, function () {
     console.log("Server is running on localhost8080");
 });
 
+app.use(express.static('public'));

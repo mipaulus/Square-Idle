@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
+    <link rel="stylesheet" type="text/css"   href="/css/style.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Practise</title>
-    <script>
-        let counter = 0;
-        function fncCounter() {
-            counter++;
-            document.getElementById("counter").innerHTML = counter.toString();
-        }
-    </script>
 </head>
+
 <body>
-<div style=align-self:center>
+<div class="text-center">
     <button id="buttonPress" type="button" onclick="fncCounter()">Click Me!</button>
 </div>
 <h1 style=text-align:center id="counter" >0</h1>
+<div style=text-align:center id="spawnArea" >
+    0
+</div>
+<script src="/js/idlegame.js"></script>
 </body>
+
 </html>
