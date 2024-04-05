@@ -1,40 +1,79 @@
 let counter = 0;
+let spawnDelay = 3000;
+let spawnDelayUpgradeCost = 1;
 
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-function fncCounter() {
+function incCounter() {
     counter++;
-    document.getElementById("idlegame").innerHTML = counter.toString();
+    roundOutput();
+    document.getElementById("counter").innerHTML = counter.toString();
+}
+
+function UpgradeSpawnDelay(){
+    if (counter >= spawnDelayUpgradeCost && spawnDelay > 3) {
+        counter -= spawnDelayUpgradeCost;
+        spawnDelayUpgradeCost = spawnDelayUpgradeCost+spawnDelayUpgradeCost*0.1 + 1;
+        spawnDelay = spawnDelay*0.9;
+        roundOutput();
+        document.getElementById("counter").innerHTML = counter.toString();
+        document.getElementById("spawDelayButtonText").innerHTML = spawnDelayUpgradeCost.toString();
+        console.log("spawnDelay set to:"+spawnDelay);
+    }
+}
+
+function roundOutput() {
+    counter = Math.round(counter);
+    spawnDelayUpgradeCost = Math.round(spawnDelayUpgradeCost);
 }
 
 function createSpawnArea() {
     let spawnArea = "";
-    for (let y = 0; y < 25 ; y++) {
+    for (let y = 0; y < 50 ; y++) {
         spawnArea = spawnArea.concat("<br>")
 
         for (let x = 0; x < 50; x++) {
-            let xString =x.toString();
-            let yString =y.toString();
-            let idString =xString.concat("/").concat(yString);
-            spawnArea = spawnArea.concat('<span id="'+idString+'">□</span>');
+            let xString = x.toString();
+            let yString = y.toString();
+            let idString = xString.concat("/").concat(yString);
+            spawnArea = spawnArea.concat('<span onmouseover="collect(this.id)" id="'+idString+'">□</span>');
         }
     }
     document.getElementById("spawnArea").innerHTML = spawnArea;
 }
 
+function collect(id){
+    if (document.getElementById(id).innerHTML === "□") {
+        return;
+    }
+    document.getElementById(id).innerHTML = "□";
+    gridElements.push(id);
+    incCounter();
+}
+
+let gridElements = [];
+for (let n = 0; n < 50 ; n++){
+    for (let m = 0; m < 50 ; m++){
+        let mString = m.toString();
+        let nString = n.toString();
+        let idString = mString.concat("/").concat(nString);
+        gridElements.push(idString);
+    }
+}
+
+
 async function spawnTargets() {
     while (true) {
-        let randomX = Math.floor(Math.random() * 50);
-        let randomY = Math.floor(Math.random() * 25);
-        let randomxString =randomX.toString();
-        let randomyString =randomY.toString();
-        let randomidString =randomxString.concat("/").concat(randomyString);
-        await Sleep(300);
-        document.getElementById(randomidString).innerHTML = "■";
-        console.log(randomidString);
-
+        await Sleep(spawnDelay);
+        if (gridElements.length === 0) {
+            continue;
+        }
+        let gridElementSize = gridElements.length;
+        let randomID = Math.floor(Math.random() * gridElementSize);
+        let chosenID = gridElements.splice(randomID, 1)[0];
+        document.getElementById(chosenID).innerHTML = "■";
     }
 }
 

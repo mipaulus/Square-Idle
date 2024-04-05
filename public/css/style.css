@@ -3,5 +3,11 @@
 }
 
 .spawnArea {
-    font-size: 10px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 60%;
+}
+
+.fontRed {
+    color:red;
 }

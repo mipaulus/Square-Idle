@@ -10,10 +10,11 @@
 
 <body>
 <div class="text-center">
-    <button id="buttonPress" type="button" onclick="fncCounter()">Click Me!</button>
+    <button id="buttonPress" type="button" onclick="incCounter()">Click Me!</button>
+    <button id="spawnDelayUpgrade" type="button" onclick="UpgradeSpawnDelay()">Reduce Spawn Delay! Cost: <span id="spawDelayButtonText">1</span></button>
 </div>
 <h1 style=text-align:center id="counter" >0</h1>
-<div style=text-align:center id="spawnArea" >
+<div class="spawnArea" id="spawnArea" >
     0
 </div>
 <script src="/js/idlegame.js"></script>
