@@ -1,15 +1,31 @@
 let counter = 0;
 let spawnDelay = 3000;
 let spawnDelayUpgradeCost = 1;
+let totalMultiplier = 1;
+let totalMultiplierUpgradeCost = 1;
 
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 function incCounter() {
-    counter++;
+    counter = counter + totalMultiplier;
     roundOutput();
     document.getElementById("counter").innerHTML = counter.toString();
+}
+
+function UpgradeTotalMultiplier() {
+    if (totalMultiplierUpgradeCost <= counter){
+        totalMultiplier++;
+        counter -= totalMultiplierUpgradeCost;
+        totalMultiplierUpgradeCost *=10;
+        document.getElementById("counter").innerHTML = counter.toString();
+        document.getElementById("totalMultiplierButtonText").innerHTML = totalMultiplier.toString();
+        document.getElementById("totalMultiplierCostButtonText").innerHTML = totalMultiplierUpgradeCost.toString();
+    }
+    else {
+        alert("not enough points");
+    }
 }
 
 function UpgradeSpawnDelay(){
@@ -21,6 +37,9 @@ function UpgradeSpawnDelay(){
         document.getElementById("counter").innerHTML = counter.toString();
         document.getElementById("spawDelayButtonText").innerHTML = spawnDelayUpgradeCost.toString();
         console.log("spawnDelay set to:"+spawnDelay);
+    }
+    else {
+        alert("not enough points");
     }
 }
 
