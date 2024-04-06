@@ -1,9 +1,11 @@
-let counter = 1000;
+let counter = 1000000;
 let spawnDelay = 3000;
 let spawnDelayUpgradeCost = 1;
 let totalMultiplier = 1;
 let totalMultiplierUpgradeCost = 1;
 let UnlockGreenBool = false;
+let rarityIncrease = 0;
+let UpgradeRarityCost = 1;
 
 //Sleep function used for timed things
 function Sleep(milliseconds) {
@@ -42,6 +44,21 @@ function UpgradeSpawnDelay(){
         document.getElementById("counter").innerHTML = counter.toString();
         document.getElementById("spawDelayButtonText").innerHTML = spawnDelayUpgradeCost.toString();
         console.log("spawnDelay set to:"+spawnDelay);
+    }
+    else {
+        alert("not enough points");
+    }
+}
+
+//function for Upgrading all Rarities(making better colors more likely to appear)
+function UpgradeRarity(){
+    if (counter >= UpgradeRarityCost && UnlockGreenBool === true){
+        counter -= UpgradeRarityCost;
+        rarityIncrease++;
+        UpgradeRarityCost += Math.floor(1 + UpgradeRarityCost*0.15);
+        document.getElementById("counter").innerHTML = counter.toString();
+        document.getElementById("UpgradeRarityCostButtonText").innerHTML = UpgradeRarityCost.toString();
+        console.log("rarityIncrease set to:"+rarityIncrease);
     }
     else {
         alert("not enough points");
@@ -112,12 +129,13 @@ async function spawnTargets() {
             continue;
         }
         let rarityCheckRNG = Math.floor(Math.random() * 100);
+        let rarityCheckTotal = rarityCheckRNG + rarityIncrease;
         let gridElementSize = gridElements.length;
         let randomID = Math.floor(Math.random() * gridElementSize);
         let chosenID = gridElements.splice(randomID, 1)[0];
         document.getElementById(chosenID).innerHTML = "■";
         document.getElementById(chosenID).style.color = "black";
-        if (rarityCheckRNG >= 70 && UnlockGreenBool === true) {
+        if (rarityCheckTotal >= 70 && UnlockGreenBool === true) {
             document.getElementById(chosenID).style.color = "green";
         }
     }
