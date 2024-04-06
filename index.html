@@ -9,12 +9,19 @@
 </head>
 
 <body>
-<div class="text-center">
-    <button id="buttonPress" type="button" onclick="incCounter()">Click Me!</button>
-    <button id="spawnDelayUpgrade" type="button" onclick="UpgradeSpawnDelay()">Reduce Spawn Delay! Cost: <span id="spawDelayButtonText">1</span></button>
-    <button id="totalMultiplierUpgrade" type="button" onclick="UpgradeTotalMultiplier()">Total Multiplier:<span id="totalMultiplierButtonText">1</span> Cost: <span id="totalMultiplierCostButtonText">1</span></button>
+<div class="Inc-Button" ><button style=font-size:35px id="buttonPress" type="button" onclick="incCounter()">Click Me!</button> </div> <br> <br>
+<div class="Upgrade-Area">
+    <span style=font-size:30px;float:left >Unlocks:</span>
+    <span style="font-size:30px">Upgrades:</span> <br> <br>
+    <div style=float:left> <button id="UnlockGreen" type="button" onclick="UnlockGreen()">Unlock Green</button>  Cost: 10000 </div>
+    <button id="spawnDelayUpgrade" type="button" onclick="UpgradeSpawnDelay()">Reduce Spawn Delay!</button>
+    <span> Cost:</span>
+    <span id="spawDelayButtonText">1</span> <br>
+    <button id="totalMultiplierUpgrade" type="button" onclick="UpgradeTotalMultiplier()">Total Multiplier: <span id="totalMultiplierButtonText">1</span></button>
+    <span> Cost:</span>
+    <span id="totalMultiplierCostButtonText">1</span>
 </div>
-<h1 style=text-align:center id="counter" >0</h1>
+<h1 style=text-align:center;font-size:50px  id="counter" >0</h1>
 <div class="spawnArea" id="spawnArea" >
     0
 </div>

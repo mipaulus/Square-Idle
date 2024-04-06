@@ -1,5 +1,5 @@
-.text-center {
-    text-align: center;
+.Upgrade-Area {
+    text-align: right;
 }
 
 .spawnArea {
@@ -10,4 +10,8 @@
 
 .fontRed {
     color:red;
+}
+
+.Inc-Button{
+    text-align: center;
 }
