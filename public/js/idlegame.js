@@ -1,9 +1,10 @@
-let counter = 1000000;
+let counter = 999999;
 let spawnDelay = 3000;
 let spawnDelayUpgradeCost = 1;
 let totalMultiplier = 1;
 let totalMultiplierUpgradeCost = 1;
 let UnlockGreenBool = false;
+let UnlockBlueBool = false;
 let rarityIncrease = 0;
 let UpgradeRarityCost = 1;
 
@@ -65,12 +66,22 @@ function UpgradeRarity(){
     }
 }
 
-//function that Unlocks Green Squares which are worth more
+//function that Unlocks Green Squares which are worth 2x
 function UnlockGreen() {
     if (counter >= 10000 && UnlockGreenBool === false) {
         counter -= 10000;
         UnlockGreenBool = true;
         document.getElementById("UnlockGreen").style.color = "green";
+        document.getElementById("counter").innerHTML = counter.toString();
+    }
+}
+
+//function that Unlocks Blue Squares which are worth 4x
+function UnlockBlue() {
+    if (counter >= 30000 && UnlockBlueBool === false) {
+        counter -= 30000;
+        UnlockBlueBool = true;
+        document.getElementById("UnlockBlue").style.color = "blue";
         document.getElementById("counter").innerHTML = counter.toString();
     }
 }
@@ -104,10 +115,27 @@ function collect(id){
     }
     document.getElementById(id).innerHTML = "□";
     gridElements.push(id);
-    if (document.getElementById(id).style.color === "green"){
-        incCounter();
+    switch (document.getElementById(id).style.color) {
+        case "green":
+            incCounter();
+            incCounter();
+            break;
+
+        case "blue":
+            for (let i= 0; i < 4; i++) {
+                incCounter();
+            }
+            break;
+
+        case "yellow":
+            counter *= 2;
+            document.getElementById("counter").innerHTML = counter.toString();
+            break;
+
+        default:
+            incCounter();
     }
-    incCounter();
+    document.getElementById(id).style.color="black";
 }
 
 //Initializing the array to track still available squares, could probably be implemented somewhere else
@@ -137,6 +165,12 @@ async function spawnTargets() {
         document.getElementById(chosenID).style.color = "black";
         if (rarityCheckTotal >= 70 && UnlockGreenBool === true) {
             document.getElementById(chosenID).style.color = "green";
+        }
+        if (rarityCheckTotal >= 100 && UnlockBlueBool === true) {
+            document.getElementById(chosenID).style.color = "blue";
+        }
+        if (rarityCheckRNG === 55 && Math.floor(Math.random() * 10) === 5) {
+            document.getElementById(chosenID).style.color = "yellow";
         }
     }
 }
