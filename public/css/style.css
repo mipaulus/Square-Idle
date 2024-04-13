@@ -15,3 +15,31 @@
 .Inc-Button{
     text-align: center;
 }
+
+.collapsible {
+    background-color: rgb(99, 59, 10);
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    padding: 8px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 24px;
+}
+
+.active, .collapsible:hover {
+    background-color: #d3930f;
+}
+
+.content {
+    padding: 12px 12px;
+    display: none;
+    overflow: hidden;
+    background-color: #633b0a;
+}
+
+.manaBar{
+    width:48px;
+    display:inline-block;
+}

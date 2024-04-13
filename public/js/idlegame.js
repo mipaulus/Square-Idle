@@ -1,4 +1,4 @@
-let counter = 999999;
+let counter = 11111111;
 let spawnDelay = 3000;
 let spawnDelayUpgradeCost = 1;
 let totalMultiplier = 1;
@@ -7,6 +7,11 @@ let UnlockGreenBool = false;
 let UnlockBlueBool = false;
 let rarityIncrease = 0;
 let UpgradeRarityCost = 1;
+let UnlockCardsBool = false;
+let shopRerollDelay = 1000;
+let availableCards = ["/rsc/Square-Plant-Card.png","/rsc/Square-Hole-Card.png"];
+let cardDeck = [];
+let cardShopSlots = 7;
 
 //Sleep function used for timed things
 function Sleep(milliseconds) {
@@ -25,7 +30,7 @@ function UpgradeTotalMultiplier() {
     if (totalMultiplierUpgradeCost <= counter){
         totalMultiplier++;
         counter -= totalMultiplierUpgradeCost;
-        totalMultiplierUpgradeCost *=10;
+        totalMultiplierUpgradeCost *= 10;
         document.getElementById("counter").innerHTML = counter.toString();
         document.getElementById("totalMultiplierButtonText").innerHTML = totalMultiplier.toString();
         document.getElementById("totalMultiplierCostButtonText").innerHTML = totalMultiplierUpgradeCost.toString();
@@ -39,7 +44,7 @@ function UpgradeTotalMultiplier() {
 function UpgradeSpawnDelay(){
     if (counter >= spawnDelayUpgradeCost && spawnDelay > 3) {
         counter -= spawnDelayUpgradeCost;
-        spawnDelayUpgradeCost = spawnDelayUpgradeCost+spawnDelayUpgradeCost*0.1 + 1;
+        spawnDelayUpgradeCost = spawnDelayUpgradeCost+spawnDelayUpgradeCost*0.2 + 1;
         spawnDelay = spawnDelay*0.9;
         roundOutput();
         document.getElementById("counter").innerHTML = counter.toString();
@@ -86,6 +91,16 @@ function UnlockBlue() {
     }
 }
 
+//Unlock the Card-System
+function UnlockCards() {
+    if (counter >= 100000 && UnlockCardsBool === false) {
+        counter -= 100000;
+        UnlockCardsBool = true;
+        document.getElementById("card-shop").hidden = false;
+        rerollShop();
+    }
+}
+
 //function for rounding numbers before changing in the html
 function roundOutput() {
     counter = Math.round(counter);
@@ -128,7 +143,7 @@ function collect(id){
             break;
 
         case "yellow":
-            counter *= 2;
+            counter = Math.floor(counter * 1.05);
             document.getElementById("counter").innerHTML = counter.toString();
             break;
 
@@ -146,6 +161,20 @@ for (let n = 0; n < 50 ; n++){
         let nString = n.toString();
         let idString = mString.concat("/").concat(nString);
         gridElements.push(idString);
+    }
+}
+
+//Handles shop Rerolls, gets called as soon as cards are unlocked
+async function rerollShop(){
+    while (true) {
+        await Sleep(shopRerollDelay);
+        let i = 0;
+        for (i = 0; i < cardShopSlots; i++){
+            document.getElementById("card-shop-slot" + i).removeAttribute("hidden");
+            let cardSpawnChoiceRNG = Math.floor(Math.random() * availableCards.length);
+            document.getElementById("card-shop-slot" + i).src = availableCards[cardSpawnChoiceRNG];
+        }
+        i = 0;
     }
 }
 
